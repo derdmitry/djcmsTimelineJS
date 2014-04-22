@@ -1,0 +1,15 @@
+{% load sekizai_tags %}
+<!-- BEGIN Timeline Embed -->
+{% addtoblock "js" %}<script type="text/javascript" src="/static/js/storyjs-embed.js"></script>{% endaddtoblock %}
+{% addtoblock "js" %}<script>
+createStoryJS({
+    type:       'timeline',
+    width:      '800',
+    height:     '600',
+    source:     '/timeline/get_json',
+    embed_id:   'my-timeline',
+    debug:      true,
+});
+</script>
+{% endaddtoblock %}
+<div id="my-timeline">PLUGIN</div>
