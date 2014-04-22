@@ -1,9 +1,4 @@
-from django.http import HttpResponse, HttpResponseRedirect
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404, render
-from django.views.generic import ListView
-from django.views.generic.list import MultipleObjectMixin
-from django.http import Http404
+from django.http import HttpResponse
 from django.core import serializers
 from models import Timeline
 
