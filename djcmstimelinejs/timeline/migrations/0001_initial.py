@@ -25,19 +25,19 @@ class Migration(SchemaMigration):
         ))
         db.send_create_signal(u'timeline', ['Asset'])
 
-        # Adding model 'Item'
-        db.create_table(u'timeline_item', (
+        # Adding model 'Date'
+        db.create_table(u'timeline_date', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=32)),
             ('headline', self.gf('django.db.models.fields.CharField')(max_length=100)),
             ('text', self.gf('django.db.models.fields.CharField')(max_length=255)),
-            ('start_date', self.gf('django.db.models.fields.DateField')()),
-            ('end_date', self.gf('django.db.models.fields.DateField')()),
+            ('startDate', self.gf('django.db.models.fields.DateField')()),
+            ('endDate', self.gf('django.db.models.fields.DateField')()),
             ('tag', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('classname', self.gf('django.db.models.fields.CharField')(max_length=100)),
             ('asset', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['timeline.Asset'])),
         ))
-        db.send_create_signal(u'timeline', ['Item'])
+        db.send_create_signal(u'timeline', ['Date'])
 
         # Adding model 'Timeline'
         db.create_table(u'timeline_timeline', (
@@ -45,17 +45,18 @@ class Migration(SchemaMigration):
             ('type', self.gf('django.db.models.fields.CharField')(max_length=32)),
             ('text', self.gf('django.db.models.fields.CharField')(max_length=255)),
             ('headline', self.gf('django.db.models.fields.CharField')(max_length=100)),
+            ('startDate', self.gf('django.db.models.fields.DateField')()),
         ))
         db.send_create_signal(u'timeline', ['Timeline'])
 
-        # Adding M2M table for field items on 'Timeline'
-        m2m_table_name = db.shorten_name(u'timeline_timeline_items')
+        # Adding M2M table for field dates on 'Timeline'
+        m2m_table_name = db.shorten_name(u'timeline_timeline_dates')
         db.create_table(m2m_table_name, (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
             ('timeline', models.ForeignKey(orm[u'timeline.timeline'], null=False)),
-            ('item', models.ForeignKey(orm[u'timeline.item'], null=False))
+            ('date', models.ForeignKey(orm[u'timeline.date'], null=False))
         ))
-        db.create_unique(m2m_table_name, ['timeline_id', 'item_id'])
+        db.create_unique(m2m_table_name, ['timeline_id', 'date_id'])
 
 
     def backwards(self, orm):
@@ -65,14 +66,14 @@ class Migration(SchemaMigration):
         # Deleting model 'Asset'
         db.delete_table(u'timeline_asset')
 
-        # Deleting model 'Item'
-        db.delete_table(u'timeline_item')
+        # Deleting model 'Date'
+        db.delete_table(u'timeline_date')
 
         # Deleting model 'Timeline'
         db.delete_table(u'timeline_timeline')
 
-        # Removing M2M table for field items on 'Timeline'
-        db.delete_table(db.shorten_name(u'timeline_timeline_items'))
+        # Removing M2M table for field dates on 'Timeline'
+        db.delete_table(db.shorten_name(u'timeline_timeline_dates'))
 
 
     models = {
@@ -104,15 +105,15 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'media': ('django.db.models.fields.URLField', [], {'max_length': '200'})
         },
-        u'timeline.item': {
-            'Meta': {'object_name': 'Item'},
+        u'timeline.date': {
+            'Meta': {'object_name': 'Date'},
             'asset': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['timeline.Asset']"}),
             'classname': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
-            'end_date': ('django.db.models.fields.DateField', [], {}),
+            'endDate': ('django.db.models.fields.DateField', [], {}),
             'headline': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '32'}),
-            'start_date': ('django.db.models.fields.DateField', [], {}),
+            'startDate': ('django.db.models.fields.DateField', [], {}),
             'tag': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'text': ('django.db.models.fields.CharField', [], {'max_length': '255'})
         },
@@ -124,9 +125,10 @@ class Migration(SchemaMigration):
         },
         u'timeline.timeline': {
             'Meta': {'object_name': 'Timeline'},
+            'dates': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['timeline.Date']", 'symmetrical': 'False'}),
             'headline': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'items': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['timeline.Item']", 'symmetrical': 'False'}),
+            'startDate': ('django.db.models.fields.DateField', [], {}),
             'text': ('django.db.models.fields.CharField', [], {'max_length': '255'}),
             'type': ('django.db.models.fields.CharField', [], {'max_length': '32'})
         }
