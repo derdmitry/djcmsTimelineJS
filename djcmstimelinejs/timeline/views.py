@@ -28,11 +28,26 @@ class DateTimeEncoder(json.JSONEncoder):
 #         allow_empty = self.get_allow_empty()
 #         return "ok"#serializers.serialize('json', self.object_list)
 
-def get_json(request):
-    object_list = Timeline.objects.all()
-    result = []
-    for obj in object_list:
-        result.append({obj.__class__.__name__.lower():model_to_dict(obj)})
 
-    return HttpResponse(json.dumps({'timeline':model_to_dict(Timeline.objects.first())},
-                                   cls=DateTimeEncoder))
+def get_json(request):
+    cat_ids = request.GET.getlist('cat_ids[]', [])
+    tl = Timeline.objects.first()
+    result = {
+        "timeline":{
+            "type": tl.type,
+            "text": tl.text,
+            "headline": tl.headline,
+            "startDate": tl.startDate,
+            "date":[]
+        }
+    }
+
+    if cat_ids:
+        dates = tl.date.filter(category_id__in=[int(x) for x in cat_ids])
+    else:
+        dates = tl.date.all()
+
+    for date in dates:
+        result["timeline"]['date'].append(model_to_dict(date))
+
+    return HttpResponse(json.dumps(result, cls=DateTimeEncoder))

@@ -1,14 +1,11 @@
 {% load sekizai_tags %}
+{% addtoblock "js" %}<script src="/static/js/jquery.js"></script>{% endaddtoblock %}
 {% addtoblock "js" %}<script type="text/javascript" src="/static/js/storyjs-embed.js"></script>{% endaddtoblock %}
-{% addtoblock "js" %}<script>
-createStoryJS({
-    type:       'timeline',
-    width:      '800',
-    height:     '600',
-    source:     '/timeline/get_json',
-    embed_id:   'my-timeline',
-    debug:      true,
-});
-</script>
-{% endaddtoblock %}
+{% addtoblock "js" %}<script type="text/javascript" src="/static/js/timeline_plugin.js"></script>{% endaddtoblock %}
 <div id="my-timeline"></div>
+<div id="categories">
+    {% for cat in categories %}
+        <input type="checkbox" value="{{cat.id}}" id="cat{{cat.id}}" checked class="cats">
+        <label for="cat{{cat.id}}">{{cat.name}}</label>
+    {% endfor %}
+</div>

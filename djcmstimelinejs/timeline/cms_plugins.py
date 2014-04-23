@@ -10,7 +10,8 @@ class HelloPlugin(CMSPluginBase):
     render_template = "timeline_plugin.html"
 
     def render(self, context, instance, placeholder):
-        context.update({'instance':instance})
+        context.update({'instance': instance,
+                        'categories': Category.objects.all()})
         return context
 
 
