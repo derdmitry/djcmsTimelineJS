@@ -31,7 +31,7 @@ class DateTimeEncoder(json.JSONEncoder):
 
 def get_json(request):
     cat_ids = request.GET.getlist('cat_ids[]', [])
-    tl = Timeline.objects.first()
+    tl = Timeline.objects.last()
     result = {
         "timeline":{
             "type": tl.type,

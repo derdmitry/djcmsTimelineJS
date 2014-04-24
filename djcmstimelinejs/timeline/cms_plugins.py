@@ -6,6 +6,7 @@ from models import *
 
 class HelloPlugin(CMSPluginBase):
     model = CMSPlugin
+#    model = News
     name = _("Timeline Plugin")
     render_template = "timeline_plugin.html"
 

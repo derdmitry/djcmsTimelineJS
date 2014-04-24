@@ -1,11 +1,23 @@
 {% load sekizai_tags %}
 {% addtoblock "js" %}<script src="/static/js/jquery.js"></script>{% endaddtoblock %}
 {% addtoblock "js" %}<script type="text/javascript" src="/static/js/storyjs-embed.js"></script>{% endaddtoblock %}
+{% addtoblock "js" %}<script type="text/javascript" src="/static/js/timeline.js"></script>{% endaddtoblock %}
 {% addtoblock "js" %}<script type="text/javascript" src="/static/js/timeline_plugin.js"></script>{% endaddtoblock %}
-<div id="my-timeline"></div>
+{% addtoblock "css" %}<style type="text/css" href="/static/css/timeline.css"></style>{% endaddtoblock %}
+
+<div id="my-timeline" class="storyjs-embed sized-embed" classname="storyjs-embed sized-embed" style="width: 798px; height: 584px;"></div>
 <div id="categories">
+    <p>Категории:</p>
     {% for cat in categories %}
-        <input type="checkbox" value="{{cat.id}}" id="cat{{cat.id}}" checked class="cats">
-        <label for="cat{{cat.id}}">{{cat.name}}</label>
+        <label for="cat{{cat.id}}">
+            <input type="checkbox" value="{{cat.id}}" id="cat{{cat.id}}" checked class="cats">
+            {{cat.name}}
+        </label>
     {% endfor %}
+
+        <label for="cat{{cat.id}}">
+            <input type="checkbox" value="1" id="chk_check_all" checked >
+            Выбрать все/снять отметку
+        </label>
+
 </div>

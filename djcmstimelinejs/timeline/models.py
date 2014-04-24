@@ -6,16 +6,6 @@ from cms.models import CMSPlugin
 # Create your models here.
 
 
-class News(CMSPlugin):
-    title = models.CharField(max_length=100)
-    show_title = models.BooleanField(default=True)
-
-    class Meta:
-        verbose_name=_('News CMS Plugin')
-
-    def __unicode__(self):
-        return self.title
-
 
 class Category(models.Model):
     name = models.CharField(max_length=32)
@@ -81,6 +71,20 @@ class Timeline(models.Model):
 
     def __unicode__(self):
         return self.headline
+
+
+
+class News(CMSPlugin):
+    title = models.CharField(max_length=100)
+    #timeline = models.ForeignKey(Timeline)
+
+    class Meta:
+        verbose_name=_('News CMS Plugin')
+
+    def __unicode__(self):
+        return self.title
+
+
 
 
 def model_to_dict(obj, exclude=('AutoField',  'OneToOneField')):
