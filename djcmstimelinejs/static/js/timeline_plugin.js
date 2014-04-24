@@ -54,11 +54,15 @@ function loadDataForTimeline(reload){
        }
     });
 }
-
+function isCategoriesChecked(){
+    var ch = true;
+    $.each($('.cats'), function(i, v){ch = ch && $(v).prop('checked')})
+    return ch;
+}
 $(".cats").change(function(){
 
     loadDataForTimeline();
-    if($(".cats").prop('checked')){
+    if(isCategoriesChecked()){
       $("#chk_check_all").prop('checked', true);
     }else{
       $("#chk_check_all").prop('checked', false);
@@ -66,11 +70,12 @@ $(".cats").change(function(){
 });
 
 $("#chk_check_all").click(function(){
-if($(".cats").prop('checked')){
+if(isCategoriesChecked()){
   $(".cats").prop('checked', false);
 }else{
   $(".cats").prop('checked', true);
 }
+loadDataForTimeline(reload=false);
 });
 
 loadDataForTimeline(reload=false);
