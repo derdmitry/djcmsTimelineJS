@@ -1,0 +1,16 @@
+Django==1.6.3
+Pygments==1.6
+South==0.8.4
+argparse==1.2.1
+bpython==0.12
+django-classy-tags==0.5.1
+django-cms==3.0
+django-mptt==0.6.0
+django-sekizai==0.7
+djangocms-admin-style==0.2.2
+djangorestframework==2.3.13
+html5lib==0.999
+python-dateutil==2.2
+six==1.6.1
+wadofstuff-django-serializers==1.1.0
+wsgiref==0.1.2
