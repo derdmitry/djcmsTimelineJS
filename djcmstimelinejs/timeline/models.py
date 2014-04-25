@@ -1,11 +1,11 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ObjectDoesNotExist
-
 from cms.models import CMSPlugin
+from django.contrib.auth.models import User
 # Create your models here.
 
-
+#__all__ = ['Category',]
 
 class Category(models.Model):
     name = models.CharField(max_length=32)
@@ -68,6 +68,7 @@ class Timeline(models.Model):
     headline = models.CharField(max_length=100)
     startDate = models.DateField()
     date = models.ManyToManyField(Date, verbose_name='date')
+
 
     def __unicode__(self):
         return self.headline

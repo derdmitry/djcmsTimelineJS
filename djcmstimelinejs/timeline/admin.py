@@ -1,10 +1,15 @@
 from django.contrib import admin
-from timeline import models as timeline_models
+from timeline import models as tm
+from django.contrib.admin.sites import AlreadyRegistered
 from django.db.models.base import ModelBase
 
-for name, var in timeline_models.__dict__.items():
+if '__all__' in dir(tm):
+    models = filter(lambda x: x[0] in tm.__all__, tm.__dict__.items())
+else:
+    models = tm.__dict__.items()
+for name, var in models:
     if type(var) is ModelBase:
         try:
             admin.site.register(var)
-        except:
+        except AlreadyRegistered, ex:
             pass

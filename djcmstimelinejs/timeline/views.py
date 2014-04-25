@@ -12,21 +12,10 @@ class DateTimeEncoder(json.JSONEncoder):
             return obj.isoformat()
         elif isinstance(obj, datetime.date):
             return obj.strftime('%Y,%m,%d')
-            #return obj.isoformat()
         elif isinstance(obj, datetime.timedelta):
             return (datetime.datetime.min + obj).time().isoformat()
         else:
             return super(DateTimeEncoder, self).default(obj)
-
-
-# class TimelineList(ListView):
-#
-#     model = Timeline
-#
-#     def get(self, request, *args, **kwargs):
-#         self.object_list = self.get_queryset()
-#         allow_empty = self.get_allow_empty()
-#         return "ok"#serializers.serialize('json', self.object_list)
 
 
 def get_json(request):
@@ -43,7 +32,7 @@ def get_json(request):
     }
 
     if cat_ids:
-        dates = tl.date.filter(category_id__in=[int(x) for x in cat_ids])
+        dates = tl.date.filter(category_id__in=map(int, cat_ids))
     else:
         dates = tl.date.all()
 

@@ -1,6 +1,5 @@
 function createTimeline(data, reload){
     var reload = typeof reload !== 'undefined' ? reload : false;
-
     $("#my-timeline").empty();
     createStoryJS({
         type:          'timeline',
@@ -8,30 +7,9 @@ function createTimeline(data, reload){
         height:        '600',
         source:        data,
         embed_id:      'my-timeline',
-//        start_at_end:  false,
         start_at_slide:0,
-//        hash_bookmark: true,
         debug:         true,
     });
-// if(reload){
-//     storyjs_embedjs.reload(data);
-// }else{
-//     var timeline_config = {
-//           type:          'timeline',
-//           width:         '800',
-//           height:        '600',
-//           source:        data,
-//           embed_id:      'my-timeline',
-//           start_at_end:  false,
-//           start_at_slide:0,
-//   //        hash_bookmark: true,
-//           debug:         true,
-//           css:           '/static/css/timeline.css',
-//   }
-
-//     storyjs_embedjs = new VMM.Timeline('my-timeline');
-//     storyjs_embedjs.init(timeline_config);
-//}
 }
 
 function getCategories(){
@@ -60,7 +38,6 @@ function isCategoriesChecked(){
     return ch;
 }
 $(".cats").change(function(){
-
     loadDataForTimeline();
     if(isCategoriesChecked()){
       $("#chk_check_all").prop('checked', true);
