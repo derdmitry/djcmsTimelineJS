@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'menus',
     'south',
     'sekizai',
+    'rest_framework',
     'timeline',
 )
 

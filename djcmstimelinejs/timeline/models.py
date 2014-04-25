@@ -77,7 +77,7 @@ class Timeline(models.Model):
 
 class News(CMSPlugin):
     title = models.CharField(max_length=100)
-    #timeline = models.ForeignKey(Timeline)
+    timeline = models.ForeignKey(Timeline, blank=True, null=True)
 
     class Meta:
         verbose_name=_('News CMS Plugin')
