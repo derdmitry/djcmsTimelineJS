@@ -1,11 +1,11 @@
 from django.http import HttpResponse
 from models import Timeline, model_to_dict
-from django.core.serializers.json import DjangoJSONEncoder
 import json
 import datetime
-from timeline.serializers import *
+#from timeline.serializers import *
 from rest_framework import generics
 from rest_framework.permissions import IsAdminUser
+
 
 class DateTimeEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -23,12 +23,12 @@ def get_json(request):
     cat_ids = request.GET.getlist('cat_ids[]', [])
     tl = Timeline.objects.last()
     result = {
-        "timeline":{
+        "timeline": {
             "type": tl.type,
             "text": tl.text,
             "headline": tl.headline,
             "startDate": tl.startDate,
-            "date":[]
+            "date": []
         }
     }
 
@@ -44,6 +44,6 @@ def get_json(request):
 
 
 class TimelineList(generics.ListCreateAPIView):
-    serializer_class = TimelineSerializer
+#    serializer_class = TimelineSerializer
     permission_classes = (IsAdminUser,)
     paginate_by = 100

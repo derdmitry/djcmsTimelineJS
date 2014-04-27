@@ -2,10 +2,9 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ObjectDoesNotExist
 from cms.models import CMSPlugin
-from django.contrib.auth.models import User
-# Create your models here.
 
 #__all__ = ['Category',]
+
 
 class Category(models.Model):
     name = models.CharField(max_length=32)
@@ -69,23 +68,20 @@ class Timeline(models.Model):
     startDate = models.DateField()
     date = models.ManyToManyField(Date, verbose_name='date')
 
-
     def __unicode__(self):
         return self.headline
 
 
-
 class News(CMSPlugin):
     title = models.CharField(max_length=100)
-    timeline = models.ForeignKey(Timeline, blank=True, null=True)
+    timeline = models.ForeignKey(Timeline, related_name='plugins', blank=True, null=True)
 
     class Meta:
-        verbose_name=_('News CMS Plugin')
+
+        verbose_name = _('News CMS Plugin')
 
     def __unicode__(self):
         return self.title
-
-
 
 
 def model_to_dict(obj, exclude=('AutoField',  'OneToOneField')):
@@ -99,7 +95,8 @@ def model_to_dict(obj, exclude=('AutoField',  'OneToOneField')):
             continue
         #print obj, field_name
         #import pdb;pdb.set_trace()
-        if field.__class__.__name__ in ['RelatedManager', 'ManyRelatedManager', 'ForeignKey']:
+        if field.__class__.__name__ in ['RelatedManager',
+                                        'ManyRelatedManager', 'ForeignKey']:
             if field.model.__name__ in exclude:
                 continue
 
@@ -124,7 +121,8 @@ def model_to_dict(obj, exclude=('AutoField',  'OneToOneField')):
         if field.__class__.__name__ == 'RelatedObject':
             exclude.add(field.model.__name__)
             #print field_name, getattr(obj, field_name)
-            tree[field_name] = model_to_dict(getattr(obj, field_name), exclude=exclude)
+            tree[field_name] = model_to_dict(
+                getattr(obj, field_name), exclude=exclude)
             continue
 
         if field.__class__.__name__ == 'ForeignKey'and getattr(obj, field_name):

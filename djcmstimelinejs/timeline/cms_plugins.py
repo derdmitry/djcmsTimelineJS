@@ -3,14 +3,16 @@ from cms.plugin_pool import plugin_pool
 from cms.models.pluginmodel import CMSPlugin
 from django.utils.translation import ugettext_lazy as _
 from models import *
+from timeline.models import News
 
 class HelloPlugin(CMSPluginBase):
-    model = CMSPlugin
-#    model = News
+#    model = CMSPlugin
+    model = News
     name = _("Timeline Plugin")
     render_template = "timeline_plugin.html"
 
     def render(self, context, instance, placeholder):
+    	import pdb;pdb.set_trace()
         context.update({'instance': instance,
                         'categories': Category.objects.all()})
         return context
