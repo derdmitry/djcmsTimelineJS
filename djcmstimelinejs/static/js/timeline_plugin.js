@@ -1,7 +1,7 @@
 function createTimeline(data, reload){
     var reload = typeof reload !== 'undefined' ? reload : false;
     $("#my-timeline").empty();
-    createStoryJS({
+    timeline = createStoryJS({
         type:          'timeline',
         width:         '800',
         height:        '600',

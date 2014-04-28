@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from timeline import models as tm
 from django.db.models.base import ModelBase
-#from timeline.models import Date, Asset, Timeline
 from django.db import models
 import sys
 
@@ -21,6 +20,7 @@ class TimelineSerializer(serializers.ModelSerializer):
     class Meta:
         model= tm.Timeline
         resource_name = 'timeline'
+
 
 class AssetSerializer(serializers.ModelSerializer):
 
