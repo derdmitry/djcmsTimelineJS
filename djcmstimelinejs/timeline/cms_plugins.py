@@ -12,9 +12,10 @@ class HelloPlugin(CMSPluginBase):
     render_template = "timeline_plugin.html"
 
     def render(self, context, instance, placeholder):
-    	import pdb;pdb.set_trace()
+        #import pdb;pdb.set_trace()
         context.update({'instance': instance,
-                        'categories': Category.objects.all()})
+                        'categories': Category.objects.filter(id__in=
+                    [x.category.id  for x in instance.timeline.date.all()])})
         return context
 
 

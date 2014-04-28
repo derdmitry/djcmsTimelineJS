@@ -1,49 +1,29 @@
-from django.http import HttpResponse
-from models import Timeline, model_to_dict
-import json
-import datetime
-#from timeline.serializers import *
+from models import Timeline
+from timeline.serializers import TimelineSerializer
 from rest_framework import generics
-from rest_framework.permissions import IsAdminUser
-
-
-class DateTimeEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, datetime.datetime):
-            return obj.isoformat()
-        elif isinstance(obj, datetime.date):
-            return obj.strftime('%Y,%m,%d')
-        elif isinstance(obj, datetime.timedelta):
-            return (datetime.datetime.min + obj).time().isoformat()
-        else:
-            return super(DateTimeEncoder, self).default(obj)
-
-
-def get_json(request):
-    cat_ids = request.GET.getlist('cat_ids[]', [])
-    tl = Timeline.objects.last()
-    result = {
-        "timeline": {
-            "type": tl.type,
-            "text": tl.text,
-            "headline": tl.headline,
-            "startDate": tl.startDate,
-            "date": []
-        }
-    }
-
-    if cat_ids:
-        dates = tl.date.filter(category_id__in=map(int, cat_ids))
-    else:
-        dates = tl.date.all()
-
-    for date in dates:
-        result["timeline"]['date'].append(model_to_dict(date))
-
-    return HttpResponse(json.dumps(result, cls=DateTimeEncoder))
+from rest_framework.renderers import BrowsableAPIRenderer
+from timeline.utils import CustomJSONRenderer
 
 
 class TimelineList(generics.ListCreateAPIView):
-#    serializer_class = TimelineSerializer
-    permission_classes = (IsAdminUser,)
-    paginate_by = 100
+    queryset = Timeline.objects.all()
+    serializer_class = TimelineSerializer
+
+
+class TimelienDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Timeline.objects.all()
+    serializer_class = TimelineSerializer
+    renderer_classes = [BrowsableAPIRenderer, CustomJSONRenderer]
+
+    def get_queryset(self):
+        #print self.context
+        return Timeline.objects.all()
+
+    def get_serializer(self, instance=None, data=None,
+                       files=None, many=False, partial=False):
+        serializer_class = self.get_serializer_class()
+        context = self.get_serializer_context()
+        cat_ids = self.request.GET.getlist('cat_ids[]', [])
+        context["cat_ids"] = cat_ids
+        return serializer_class(instance, data=data, files=files,
+                                many=many, partial=partial, context=context)

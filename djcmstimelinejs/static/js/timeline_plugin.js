@@ -13,19 +13,21 @@ function createTimeline(data, reload){
 }
 
 function getCategories(){
+//return params for ajax request to get timeline
 var cat_ids = []
 $.each($(".cats:checked"), function(i,v){
         cat_ids.push($(v).val());
     });
-return {cat_ids:cat_ids}
+return {cat_ids:cat_ids}//, timeline_id:window.timeline_id}
 }
 
 function loadDataForTimeline(reload){
+  console.log(getCategories());
     var reload = typeof reload !== 'undefined' ? reload : true;
     $.ajax({
        type: "GET",
        data: getCategories(),
-       url: "/timeline/get_json",
+       url: "/timeline/timeline/" + window.timeline_id,
        dataType:'json',
        success: function(data){
          createTimeline(data, reload);
@@ -37,22 +39,24 @@ function isCategoriesChecked(){
     $.each($('.cats'), function(i, v){ch = ch && $(v).prop('checked')})
     return ch;
 }
-$(".cats").change(function(){
-    loadDataForTimeline();
+$(document).ready(function(){
+    $(".cats").change(function(){
+        loadDataForTimeline();
+        if(isCategoriesChecked()){
+          $("#chk_check_all").prop('checked', true);
+        }else{
+          $("#chk_check_all").prop('checked', false);
+        }
+    });
+
+    $("#chk_check_all").click(function(){
     if(isCategoriesChecked()){
-      $("#chk_check_all").prop('checked', true);
+      $(".cats").prop('checked', false);
     }else{
-      $("#chk_check_all").prop('checked', false);
+      $(".cats").prop('checked', true);
     }
-});
+    loadDataForTimeline(reload=false);
+    });
 
-$("#chk_check_all").click(function(){
-if(isCategoriesChecked()){
-  $(".cats").prop('checked', false);
-}else{
-  $(".cats").prop('checked', true);
-}
-loadDataForTimeline(reload=false);
+    loadDataForTimeline(reload=false);
 });
-
-loadDataForTimeline(reload=false);

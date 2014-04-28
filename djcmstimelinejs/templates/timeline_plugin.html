@@ -6,6 +6,9 @@
 {% addtoblock "js" %}<script type="text/javascript" src="{% static '/static/js/timeline.js' %}"></script>{% endaddtoblock %}
 {% addtoblock "js" %}<script type="text/javascript" src="{% static '/static/js/timeline_plugin.js' %}"></script>{% endaddtoblock %}
 {% addtoblock "css" %}<style type="text/css" href="{% static '/css/timeline.css' %}"></style>{% endaddtoblock %}
+{% addtoblock "js" %}<script type="text/javascript">
+window.timeline_id = {{instance.timeline.id}};
+</script>{% endaddtoblock %}
 
 <div id="my-timeline" class="storyjs-embed sized-embed" classname="storyjs-embed sized-embed" style="width: 798px; height: 584px;"></div>
 <div id="categories">
