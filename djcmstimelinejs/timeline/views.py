@@ -16,7 +16,6 @@ class TimelienDetail(generics.RetrieveUpdateDestroyAPIView):
     renderer_classes = [BrowsableAPIRenderer, CustomJSONRenderer]
 
     def get_queryset(self):
-        #print self.context
         return Timeline.objects.all()
 
     def get_serializer(self, instance=None, data=None,

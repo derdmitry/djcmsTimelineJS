@@ -1,5 +1,8 @@
 function createTimeline(data, reload){
     var reload = typeof reload !== 'undefined' ? reload : false;
+    if(reload){
+          storyjs_embedjs.reload(data);
+    }else{
     $("#my-timeline").empty();
     timeline = createStoryJS({
         type:          'timeline',
@@ -10,6 +13,8 @@ function createTimeline(data, reload){
         start_at_slide:0,
         debug:         true,
     });
+    storyjs_embedjs = new VMM.Timeline('my-timeline');
+  }
 }
 
 function getCategories(){
@@ -41,7 +46,7 @@ function isCategoriesChecked(){
 }
 $(document).ready(function(){
     $(".cats").change(function(){
-        loadDataForTimeline();
+        loadDataForTimeline(reload=true);
         if(isCategoriesChecked()){
           $("#chk_check_all").prop('checked', true);
         }else{

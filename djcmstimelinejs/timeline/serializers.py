@@ -61,11 +61,11 @@ def ClassFactory(name, argnames, BaseSerializer=BaseSerializer):
     return newclass
 
 
-def SerializerFactory(name, model, BaseSerializer=serializers.ModelSerializer):
+def SerializerFactory(name, model, args={}, BaseSerializer=serializers.ModelSerializer):
     class Meta:
         pass
     Meta.model = model
-    newserializer = type(name, (BaseSerializer, ), {})
+    newserializer = type(name, (BaseSerializer, ), args)
     newserializer.Meta = Meta
     return newserializer
 
