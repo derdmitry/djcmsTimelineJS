@@ -1,9 +1,10 @@
 from cms.plugin_base import CMSPluginBase
 from cms.plugin_pool import plugin_pool
-from cms.models.pluginmodel import CMSPlugin
 from django.utils.translation import ugettext_lazy as _
 from models import *
-from timeline.models import News
+from django.contrib import admin
+from timeline.models import News, Timeline
+
 
 class HelloPlugin(CMSPluginBase):
 #    model = CMSPlugin

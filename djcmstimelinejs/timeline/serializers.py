@@ -76,8 +76,8 @@ def SerializerFactory(name, model, args={}, BaseSerializer=serializers.ModelSeri
 #     models = tm.__dict__.items()
 # for name, var in models:
 #     if type(var) is ModelBase:
-#         # kwa = dict(
-#         #     [(x.name, serializers.__dict__.get(x.__class__.__name__, serializers.Field).__call__()) for x in var._meta.fields])
+#         kwa = dict(
+#             [(x.name, serializers.__dict__.get(x.__class__.__name__, serializers.Field).__call__()) for x in var._meta.fields])
 #         tempClass = SerializerFactory("%sSerializer" % name, var)
 #         setattr(sys.modules[__name__], "%sSerializer" % name, tempClass)
 

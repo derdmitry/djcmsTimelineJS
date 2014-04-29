@@ -47,6 +47,7 @@ INSTALLED_APPS = (
     'south',
     'sekizai',
     'rest_framework',
+    'bootstrap3',
     'timeline',
 )
 

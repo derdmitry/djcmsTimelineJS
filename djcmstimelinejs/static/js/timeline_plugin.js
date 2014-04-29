@@ -1,10 +1,10 @@
 function createTimeline(data, reload){
     var reload = typeof reload !== 'undefined' ? reload : false;
-    if(reload){
+    if(reload && storyjs_embedjs){
           storyjs_embedjs.reload(data);
     }else{
     $("#my-timeline").empty();
-    timeline = createStoryJS({
+    createStoryJS({
         type:          'timeline',
         width:         '800',
         height:        '600',
@@ -64,4 +64,7 @@ $(document).ready(function(){
     });
 
     loadDataForTimeline(reload=false);
+    $("body").on("UPDATE", ".vco-slider", function() {
+      console.log("MY!!!!!!!!!!!!!!!!");
+    });
 });

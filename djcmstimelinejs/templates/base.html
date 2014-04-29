@@ -1,10 +1,15 @@
 {% load cms_tags sekizai_tags %}
+{% load bootstrap3 %}
 <html>
   <head>
+      {% bootstrap_css %}
+      {% bootstrap_javascript %}
       {% render_block "css" %}
   </head>
   <body>
       {% cms_toolbar %}
+      {# Display django.contrib.messages as Bootstrap alerts #}
+      {% bootstrap_messages %}
       {% placeholder base_content %}
       {% block base_content %}{% endblock %}
       {% render_block "js" %}
