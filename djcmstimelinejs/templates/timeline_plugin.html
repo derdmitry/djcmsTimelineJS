@@ -16,7 +16,7 @@ window.timeline_id = {{instance.timeline.id}};
 <div id="categories">
     <p>Категории:</p>
     {% for cat in categories %}
-        <label for="cat{{cat.id}}">
+        <label for="cat{{cat.id}}" class="btn">
             <input type="checkbox" value="{{cat.id}}" id="cat{{cat.id}}" checked class="cats">
             {{cat.name}}
         </label>

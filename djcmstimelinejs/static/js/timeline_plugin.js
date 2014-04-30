@@ -35,6 +35,7 @@ function loadDataForTimeline(reload){
        url: "/timeline/timeline/" + window.timeline_id,
        dataType:'json',
        success: function(data){
+         window.data = data;
          createTimeline(data, reload);
        }
     });
@@ -64,7 +65,11 @@ $(document).ready(function(){
     });
 
     loadDataForTimeline(reload=false);
-    $("body").on("UPDATE", ".vco-slider", function() {
-      console.log("MY!!!!!!!!!!!!!!!!");
+    $("body").on("UPDATE", ".vco-navigation", function() {
+      alert("MY!!!!!!!!!!!!!!!!");
+    });
+
+    $(document).on("click", "div.nav-next", function() {
+
     });
 });
