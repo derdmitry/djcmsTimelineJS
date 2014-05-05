@@ -5313,6 +5313,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
         /* NAVIGATION
         ================================================== */
         function onNextClick(e) {
+
             if (current_slide == slides.length - 1) {
                 backToCurrentSlide();
             } else {
@@ -5673,6 +5674,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
             current_slide	= n;
             _pos			= slides[current_slide].leftpos();
 
+
+            if(window.$data == "undefined"){
+                window.$data = data;
+            }else{
+                data = window.$data;
+            }
 
             if (current_slide == 0) {is_first = true};
             if (current_slide +1 >= slides.length) {is_last = true};
@@ -7367,6 +7374,10 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 
         this.reload = function(_d) {
             trace("Load new timeline data" + _d);
+
+            window.$global = global;
+            window.$config = config;
+            console.log(global, config.events.messege, config.language.messages.loading_timeline);
             VMM.fireEvent(global, config.events.messege, config.language.messages.loading_timeline);
             data = {};
             VMM.Timeline.DataObj.getData(_d);
@@ -7988,6 +7999,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
             VMM.Lib.addClass(markers[current_marker].marker, "active");
 
             // ANIMATE MARKER
+            window.$timenav = $timenav;
             VMM.Lib.stop($timenav);
             VMM.Lib.animate($timenav, _duration, _ease, {"left": timenav_pos.left});
 

@@ -45,7 +45,12 @@ function isCategoriesChecked(){
     $.each($('.cats'), function(i, v){ch = ch && $(v).prop('checked')})
     return ch;
 }
+function addDateToTimeline(){
+    //
+    VMM.Timeline.DataObj.getData(x);
+}
 $(document).ready(function(){
+  window.$data = "undefined";
     $(".cats").change(function(){
         loadDataForTimeline(reload=true);
         if(isCategoriesChecked()){
