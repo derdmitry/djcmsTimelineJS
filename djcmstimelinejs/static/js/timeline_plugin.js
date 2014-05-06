@@ -39,6 +39,9 @@ function loadDataForTimeline(reload) {
         success: function (data) {
             window.data = data;
             window.date_count = data.timeline.date_count;
+            window.page = data.timeline.current_page;
+            window.total_page = data.timeline.total_page;
+
             createTimeline(data, reload);
         }
     });
@@ -101,5 +104,5 @@ $(document).ready(function () {
             loadDataForTimeline(reload = true);
         }
     });
-     window.page = 1;
+
 });
