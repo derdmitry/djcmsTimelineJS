@@ -95,5 +95,11 @@ $(document).ready(function () {
         checkedClass: 'icon-check',
         uncheckedClass: 'icon-check-empty'
     });
-    $(".cats").checkbox('toggleDisable');
+    $("#my-timeline").click(function(){
+        if(window.current_marker + 1 ==  window.count_marker){
+            window.page++;
+            loadDataForTimeline(reload = true);
+        }
+    });
+     window.page = 1;
 });

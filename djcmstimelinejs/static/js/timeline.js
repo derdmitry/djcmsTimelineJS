@@ -5379,6 +5379,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
         ================================================== */
         function upDate() {
             config.current_slide = current_slide;
+            window.current_slide = current_slide;
             VMM.fireEvent(layout, "UPDATE");
         };
 
@@ -7972,6 +7973,8 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
                 is_first	= false;
 
             current_marker = 	n;
+            window.current_marker = current_marker;
+            window.count_marker = markers.length;
 
             timenav_pos.left			= (config.width/2) - markers[current_marker].pos_left
             timenav_pos.visible.left	= Math.abs(timenav_pos.left) - 100;
