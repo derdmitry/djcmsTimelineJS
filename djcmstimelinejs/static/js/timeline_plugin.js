@@ -78,7 +78,7 @@ $(document).ready(function () {
             $(".cats").click();
             //$(".cats").checkbox('toggleEnabled');
         }
-        loadDataForTimeline(reload = false);
+        loadDataForTimeline(reload = true);
     });
 
     loadDataForTimeline(reload = false);
