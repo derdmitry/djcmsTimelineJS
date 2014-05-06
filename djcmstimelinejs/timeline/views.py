@@ -17,6 +17,7 @@ class TimelienDetail(generics.RetrieveUpdateDestroyAPIView):
 
     def get_serializer_context(self):
         context = super(TimelienDetail, self).get_serializer_context()
-        cat_ids = self.request.GET.getlist('cat_ids[]', [])
-        context["cat_ids"] = cat_ids
+        context["cat_ids"] = self.request.GET.getlist('cat_ids[]', [])
+        context["page"] = int(self.request.GET.get('page', 1))
+        context["count"] = int(self.request.GET.get('count', 3))
         return context

@@ -5,6 +5,8 @@
 {% addtoblock "js" %}<script src="{% static '/static/js/jquery.js' %}"></script>{% endaddtoblock %}
 {% addtoblock "js" %}<script type="text/javascript" src="{% static '/static/js/storyjs-embed.js' %}"></script>{% endaddtoblock %}
 {% addtoblock "js" %}<script type="text/javascript" src="{% static '/static/js/timeline.js' %}"></script>{% endaddtoblock %}
+{% addtoblock "js" %}<script type="text/javascript" src="{% static '/static/js/bootstrap-checkbox.js' %}"></script>{% endaddtoblock %}
+{% addtoblock "css" %}<style type="text/css" href="{% static '/css/bootstrap-checkbox.css' %}"></style>{% endaddtoblock %}
 {% addtoblock "js" %}<script type="text/javascript" src="{% static '/static/js/timeline_plugin.js' %}"></script>{% endaddtoblock %}
 {% addtoblock "css" %}<style type="text/css" href="{% static '/css/timeline.css' %}"></style>{% endaddtoblock %}
 {% addtoblock "js" %}<script type="text/javascript">
@@ -15,17 +17,22 @@ window.timeline_id = {{instance.timeline.id}};
  {% buttons %}
 <div id="categories">
     <p>Категории:</p>
-    {% for cat in categories %}
-        <label for="cat{{cat.id}}" class="btn">
-            <input type="checkbox" value="{{cat.id}}" id="cat{{cat.id}}" checked class="cats">
-            {{cat.name}}
-        </label>
-    {% endfor %}
-
+    <ul style="list-style-type: none;">
+    <li>
         <label for="cat{{cat.id}}">
-            <input type="checkbox" value="1" id="chk_check_all" checked >
+            <input type="checkbox" value="1" id="chk_check_all" checked class="checkbox" >
             Выбрать все/снять отметку
         </label>
+    </li>
+    {% for cat in categories %}
+    <li>
+        <input type="checkbox" value="{{cat.id}}" id="cat{{cat.id}}" checked class="checkbox cats">
+        <label for="cat{{cat.id}}" class="btn">
+            {{cat.name}}
+        </label>
+    </li>
+    {% endfor %}
+     </ul>
 
 </div>
 {% endbuttons %}

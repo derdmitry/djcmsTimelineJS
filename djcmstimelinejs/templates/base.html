@@ -3,7 +3,6 @@
 <html>
   <head>
       {% bootstrap_css %}
-      {% bootstrap_javascript %}
       {% render_block "css" %}
   </head>
   <body>
@@ -13,5 +12,6 @@
       {% placeholder base_content %}
       {% block base_content %}{% endblock %}
       {% render_block "js" %}
+      {% bootstrap_javascript %}
   </body>
 </html>

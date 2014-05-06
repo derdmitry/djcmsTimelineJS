@@ -1,21 +1,44 @@
 from rest_framework import serializers
 from timeline import models as tm
-from django.db.models.base import ModelBase
-from django.db import models
 import sys
-
+import  math
 
 class TimelineSerializer(serializers.ModelSerializer):
 
     date = serializers.SerializerMethodField('get_dates')
+    date_count = serializers.SerializerMethodField('get_date_count')
+    current_page = serializers.SerializerMethodField('get_page')
+    total_page = serializers.SerializerMethodField('get_total_page')
 
     def get_dates(self,obj):
         categories_id = self.context.get('cat_ids', None)
+        page = self.context.get('page', 1) - 1
+        count = self.context.get('count', 3)
         if categories_id:
             dates = obj.date.filter(category_id__in=categories_id)
         else:
             dates = obj.date.all()
-        return DateSerializer(dates).data
+        return DateSerializer(dates[page*count:page*count+count]).data
+
+    def get_date_count(self, obj):
+        categories_id = self.context.get('cat_ids', None)
+        if categories_id:
+            return obj.date.filter(category_id__in=categories_id).count()
+        else:
+            return obj.date.count()
+
+    def get_page(self, obj):
+        return self.context.get('page', 1)
+
+    def get_total_page(self, obj):
+        count = self.context.get('count', 3)
+        categories_id = self.context.get('cat_ids', None)
+        if categories_id:
+            date_count = obj.date.filter(category_id__in=categories_id).count()
+        else:
+            date_count = obj.date.count()
+        return int(math.ceil(date_count/float(count)))
+
 
     class Meta:
         model= tm.Timeline
