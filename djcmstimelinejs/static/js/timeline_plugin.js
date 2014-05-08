@@ -24,7 +24,7 @@ function getCategories() {
         cat_ids.push($(v).val());
     });
     return {cat_ids: cat_ids,
-        page: window.page ? window.page : 1,
+        page: window.page ? window.page : 0,
         count: window.count ? window.count : 3}
 }
 
@@ -87,10 +87,47 @@ $(document).ready(function () {
     });
 
     $(document).on("click", "div.nav-next", function () {
-
+        if(window.current_marker + 1 ==  window.count_marker){
+            window.page++;
+            $.ajax({
+                type: "GET",
+                data: getCategories(),
+                url: "/timeline/timeline/" + window.timeline_id,
+                dataType: 'json',
+                success: function (data) {
+                    window.data = data;
+                    window.date_count = data.timeline.date_count;
+                    window.page = data.timeline.current_page;
+                    window.total_page = data.timeline.total_page;
+                    VMM.Timeline.DataObj.getData(data);
+                    window.goToSlide(1, "easeOutExpo", 0, true);
+                    window.goToEvent(1)
+                    //storyjs_embedjs.reload(data);
+                    VMM.Lib.visible("div.nav-next", true);
+                }
+            });
+        }
     });
-    $(document).on("click", "div.nav-prev", function () {
-
+    $(document).on("click", "div.nav-previous", function () {
+        if(window.current_marker  ==  1  && window.page > 0){
+            window.page--;
+            $.ajax({
+                type: "GET",
+                data: getCategories(),
+                url: "/timeline/timeline/" + window.timeline_id,
+                dataType: 'json',
+                success: function (data) {
+                    window.data = data;
+                    window.date_count = data.timeline.date_count;
+                    window.page = data.timeline.current_page;
+                    window.total_page = data.timeline.total_page;
+                    VMM.Timeline.DataObj.getData(data);
+                    window.goToSlide(3, "easeOutExpo", 0, true);
+                    window.goToEvent(3)
+                    VMM.Lib.visible("div.nav-next", true);
+                }
+            });
+        }
     });
     $("#categories input").checkbox({
         buttonStyle: 'btn-base',
@@ -99,10 +136,7 @@ $(document).ready(function () {
         uncheckedClass: 'icon-check-empty'
     });
     $("#my-timeline").click(function(){
-        if(window.current_marker + 1 ==  window.count_marker){
-            window.page++;
-            loadDataForTimeline(reload = true);
-        }
+
     });
 
 });

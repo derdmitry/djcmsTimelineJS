@@ -12,7 +12,7 @@ class TimelineSerializer(serializers.ModelSerializer):
 
     def get_dates(self,obj):
         categories_id = self.context.get('cat_ids', None)
-        page = self.context.get('page', 1) - 1
+        page = self.context.get('page', 1)
         count = self.context.get('count', 3)
         if categories_id:
             dates = obj.date.filter(category_id__in=categories_id)

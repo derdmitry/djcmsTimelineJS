@@ -5660,6 +5660,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
             goToSlide(n, ease, duration);
         ================================================== */
         function goToSlide(n, ease, duration, fast, firstrun) {
+
             var _ease		= config.ease,
                 _duration	= config.duration,
                 is_last		= false,
@@ -5767,7 +5768,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
             preloadSlides();
             VMM.fireEvent($slider, "MESSAGE", "TEST");
         }
-
+        window.goToSlide = goToSlide;
         function backToCurrentSlide() {
             VMM.Lib.stop($slider_container);
             VMM.Lib.animate($slider_container, config.duration, "easeOutExpo", {"left": -(slides[current_slide].leftpos()) +  config.slider.content.padding} );
@@ -7260,6 +7261,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
                 timenav.setMarker(config.current_slide, config.ease,config.duration);
             }
         }
+        //some another brutal hack
+        window.goToEvent = goToEvent;
 
         function setHash(n) {
             if (config.hash_bookmark) {
@@ -7378,7 +7381,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 
             window.$global = global;
             window.$config = config;
-            console.log(global, config.events.messege, config.language.messages.loading_timeline);
             VMM.fireEvent(global, config.events.messege, config.language.messages.loading_timeline);
             data = {};
             VMM.Timeline.DataObj.getData(_d);
@@ -7492,8 +7494,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
         };
 
         // BUILD DATE OBJECTS
-        function buildDates() {
-
+        function buildDates(_d) {
+            var data = typeof _d !== 'undefined' ? _d : data;
             _dates = [];
             VMM.fireEvent(global, config.events.messege, "Building Dates");
             updateSize();
@@ -7547,7 +7549,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
                 }
 
             };
-
+            window.buildDates = buildDates;
             /* CUSTOM SORT
             ================================================== */
             if (data.type != "storify") {
