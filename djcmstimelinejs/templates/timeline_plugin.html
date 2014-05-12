@@ -8,13 +8,22 @@
 {% addtoblock "js" %}<script type="text/javascript" src="{% static '/static/js/bootstrap-checkbox.js' %}"></script>{% endaddtoblock %}
 {% addtoblock "css" %}<style type="text/css" href="{% static '/css/bootstrap-checkbox.css' %}"></style>{% endaddtoblock %}
 {% addtoblock "js" %}<script type="text/javascript" src="{% static '/static/js/timeline_plugin.js' %}"></script>{% endaddtoblock %}
+{% addtoblock "js" %}<script type="text/javascript" src="{% static '/static/js/bootstrap-datepicker.js' %}"></script>{% endaddtoblock %}
 {% addtoblock "css" %}<style type="text/css" href="{% static '/css/timeline.css' %}"></style>{% endaddtoblock %}
+{% addtoblock "css" %}<style type="text/css" href="{% static '/css/datepicker.css' %}"></style>{% endaddtoblock %}
 {% addtoblock "js" %}<script type="text/javascript">
 window.timeline_id = {{instance.timeline.id}};
 </script>{% endaddtoblock %}
 
 <div id="my-timeline" class="storyjs-embed sized-embed" classname="storyjs-embed sized-embed" style="width: 798px; height: 584px;"></div>
  {% buttons %}
+<div id="dates">
+<p>Период:</p>
+<label for="start-date">Начало</label>
+<input type="text" id="start-date">
+<label for="end-date">Конец</label>
+<input type="text" id="end-date">
+</div>
 <div id="categories">
     <p>Категории:</p>
     <ul style="list-style-type: none;">
@@ -35,4 +44,5 @@ window.timeline_id = {{instance.timeline.id}};
      </ul>
 
 </div>
+
 {% endbuttons %}

@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from timeline import models as tm
+import datetime
 import sys
 import  math
 
@@ -9,6 +10,8 @@ class TimelineSerializer(serializers.ModelSerializer):
     date_count = serializers.SerializerMethodField('get_date_count')
     current_page = serializers.SerializerMethodField('get_page')
     total_page = serializers.SerializerMethodField('get_total_page')
+    start_date = serializers.SerializerMethodField('get_start_date')
+    end_date = serializers.SerializerMethodField('get_end_date')
 
     def get_dates(self,obj):
         categories_id = self.context.get('cat_ids', None)
@@ -39,6 +42,25 @@ class TimelineSerializer(serializers.ModelSerializer):
             date_count = obj.date.count()
         return int(math.ceil(date_count/float(count)))
 
+    def get_start_date(self, obj):
+        categories_id = self.context.get('cat_ids', None)
+        date = obj.date.filter(category_id__in=categories_id).order_by("startDate").first()
+        print date
+        if date:
+            return date.startDate
+        else:
+            d = datetime.datetime.now()
+            return datetime.date(d.year, d.month, d.day)
+
+    def get_end_date(self, obj):
+        categories_id = self.context.get('cat_ids', None)
+        date = obj.date.filter(category_id__in=categories_id).order_by("-endDate").first()
+        if date:
+            return date.endDate
+        else:
+            d = datetime.datetime.now()
+
+            return datetime.date(d.year, d.month, d.day)
 
     class Meta:
         model= tm.Timeline

@@ -23,7 +23,11 @@ function getCategories() {
     $.each($(".cats:checked"), function (i, v) {
         cat_ids.push($(v).val());
     });
+    var start_date = $('#start-date').val();
+    var end_date = $('#end-date').val();
     return {cat_ids: cat_ids,
+        start_date: start_date,
+        end_date: end_date,
         page: window.page ? window.page : 0,
         count: window.count ? window.count : 3}
 }
@@ -41,7 +45,8 @@ function loadDataForTimeline(reload) {
             window.date_count = data.timeline.date_count;
             window.page = data.timeline.current_page;
             window.total_page = data.timeline.total_page;
-
+            $('#start-date').val(data.timeline.start_date);
+            $('#end-date').val(data.timeline.end_date);
             createTimeline(data, reload);
         }
     });
@@ -138,5 +143,8 @@ $(document).ready(function () {
         checkedClass: 'icon-check',
         uncheckedClass: 'icon-check-empty'
     });
+
+    $('#start-date').datepicker();
+    $('#end-date').datepicker();
 
 });
