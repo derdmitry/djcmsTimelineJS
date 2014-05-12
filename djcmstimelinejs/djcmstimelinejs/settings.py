@@ -49,7 +49,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'bootstrap3',
     'timeline',
-    'gunicorn'
+    'gunicorn',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -154,3 +154,7 @@ LOGGING = {
         },
     }
 }
+try:
+    from local_settings import *
+except:
+    pass
