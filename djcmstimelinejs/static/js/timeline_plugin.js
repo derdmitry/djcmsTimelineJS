@@ -11,7 +11,7 @@ function createTimeline(data, reload) {
             source: data,
             embed_id: 'my-timeline',
             start_at_slide: 0,
-            debug: true,
+            debug: true
         });
         storyjs_embedjs = new VMM.Timeline('my-timeline');
     }
@@ -86,57 +86,57 @@ $(document).ready(function () {
         alert("MY!!!!!!!!!!!!!!!!");
     });
 
-    $(document).on("click", "div.nav-next", function () {
-        if(window.current_marker + 1 ==  window.count_marker){
-            window.page++;
-            $.ajax({
-                type: "GET",
-                data: getCategories(),
-                url: "/timeline/timeline/" + window.timeline_id,
-                dataType: 'json',
-                success: function (data) {
-                    window.data = data;
-                    window.date_count = data.timeline.date_count;
-                    window.page = data.timeline.current_page;
-                    window.total_page = data.timeline.total_page;
-                    VMM.Timeline.DataObj.getData(data);
-                    window.goToSlide(1, "easeOutExpo", 0, true);
-                    window.goToEvent(1)
-                    //storyjs_embedjs.reload(data);
-                    VMM.Lib.visible("div.nav-next", true);
-                }
-            });
-        }
-    });
-    $(document).on("click", "div.nav-previous", function () {
-        if(window.current_marker  ==  1  && window.page > 0){
-            window.page--;
-            $.ajax({
-                type: "GET",
-                data: getCategories(),
-                url: "/timeline/timeline/" + window.timeline_id,
-                dataType: 'json',
-                success: function (data) {
-                    window.data = data;
-                    window.date_count = data.timeline.date_count;
-                    window.page = data.timeline.current_page;
-                    window.total_page = data.timeline.total_page;
-                    VMM.Timeline.DataObj.getData(data);
-                    window.goToSlide(3, "easeOutExpo", 0, true);
-                    window.goToEvent(3)
-                    VMM.Lib.visible("div.nav-next", true);
-                }
-            });
-        }
-    });
+//    $(document).on("click", "div.nav-next", function () {
+//        if(window.current_marker + 1 ==  window.count_marker){
+//            window.page++;
+//            $.ajax({
+//                type: "GET",
+//                data: getCategories(),
+//                url: "/timeline/timeline/" + window.timeline_id,
+//                dataType: 'json',
+//                success: function (data) {
+//                    window.data = data;
+//                    window.date_count = data.timeline.date_count;
+//                    window.page = data.timeline.current_page;
+//                    window.total_page = data.timeline.total_page;
+//                    storyjs_embedjs.reload(data);
+//                    /*
+//                    VMM.Timeline.DataObj.getData(data);
+//                    window.goToSlide(1, "easeOutExpo", 0, true);
+//                    window.goToEvent(1)
+//
+//                    VMM.Lib.visible("div.nav-next", true);*/
+//                }
+//            });
+//        }
+//    });
+//    $(document).on("click", "div.nav-previous", function () {
+//        if(window.current_marker  ==  1  && window.page > 0){
+//            window.page--;
+//            $.ajax({
+//                type: "GET",
+//                data: getCategories(),
+//                url: "/timeline/timeline/" + window.timeline_id,
+//                dataType: 'json',
+//                success: function (data) {
+//                    window.data = data;
+//                    window.date_count = data.timeline.date_count;
+//                    window.page = data.timeline.current_page;
+//                    window.total_page = data.timeline.total_page;
+//                    storyjs_embedjs.reload(data);
+//                    VMM.Timeline.DataObj.getData(data);
+//                    window.goToSlide(3, "easeOutExpo", 0, true);
+//                    window.goToEvent(3)
+//                    VMM.Lib.visible("div.nav-next", true);
+//                }
+//            });
+//        }
+//    });
     $("#categories input").checkbox({
         buttonStyle: 'btn-base',
         buttonStyleChecked: 'btn-success',
         checkedClass: 'icon-check',
         uncheckedClass: 'icon-check-empty'
-    });
-    $("#my-timeline").click(function(){
-
     });
 
 });
