@@ -49,6 +49,7 @@ INSTALLED_APPS = (
     'rest_framework',
     'bootstrap3',
     'timeline',
+    'gunicorn'
 )
 
 MIDDLEWARE_CLASSES = (
