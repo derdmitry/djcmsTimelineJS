@@ -5,6 +5,16 @@ from django.contrib.admin.sites import AlreadyRegistered
 from django.db.models.base import ModelBase
 
 
+class DateInline(admin.TabularInline):
+    model = tm.Date
+
+class AssetAdmin(admin.ModelAdmin):
+    inlines = [
+        DateInline,
+    ]
+
+admin.site.register(tm.Asset, AssetAdmin)
+
 if '__all__' in dir(tm):
     models = filter(lambda x: x[0] in tm.__all__, tm.__dict__.items())
 else:
