@@ -90,7 +90,9 @@ $(document).ready(function () {
     $("body").on("UPDATE", ".vco-navigation", function () {
         alert("MY!!!!!!!!!!!!!!!!");
     });
-
+    $("#dates > input").change(function(){
+        loadDataForTimeline(reload = true);
+    });
 //    $(document).on("click", "div.nav-next", function () {
 //        if(window.current_marker + 1 ==  window.count_marker){
 //            window.page++;
@@ -144,7 +146,7 @@ $(document).ready(function () {
         uncheckedClass: 'icon-check-empty'
     });
 
-    $('#start-date').datepicker();
-    $('#end-date').datepicker();
+//    $('#start-date').datepicker();
+//    $('#end-date').datepicker();
 
 });
