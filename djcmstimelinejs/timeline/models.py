@@ -32,7 +32,7 @@ class Date(models.Model):
     endDate = models.DateField()
     tag = models.CharField(max_length=255)
     classname = models.CharField(max_length=100)
-    asset = models.ForeignKey(Asset)
+    asset = models.ForeignKey(Asset, related_name='assets', blank=True, null=True)
     category = models.ForeignKey(Category, blank=True, null=True)
 
     def __unicode__(self):
