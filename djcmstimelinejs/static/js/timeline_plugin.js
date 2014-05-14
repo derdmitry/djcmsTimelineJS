@@ -1,24 +1,19 @@
+
 function createTimeline(data, reload) {
     var reload = typeof reload !== 'undefined' ? reload : false;
-    if (reload && storyjs_embedjs) {
-        storyjs_embedjs.reload(data);
-    } else {
-        $("#my-timeline").empty();
-        createStoryJS({
-            type: 'timeline',
-            width: '800',
-            height: '600',
-            source: data,
-            embed_id: 'my-timeline',
-            start_at_slide: 0,
-            debug: true
-        });
-        storyjs_embedjs = new VMM.Timeline('my-timeline');
-    }
+    var issues = $("#issues");
+    var dates = $("#dates");
+    $.each(data.timeline.date, function(i, v){
+        dates.append(tmpl('tmp_date', v));
+        issues.append(tmpl('tmp_issues', v));
+        var _src = $("#youtube-video-"+ v.id).attr('src');
+        $("#youtube-video-"+ v.id).attr('src', _src.replace(/watch/, "embed/watch"));
+    });
+    $().timelinr({});
 }
 
 function getCategories() {
-//return params for ajax request to get timeline
+
     var cat_ids = []
     $.each($(".cats:checked"), function (i, v) {
         cat_ids.push($(v).val());
@@ -90,55 +85,10 @@ $(document).ready(function () {
     $("body").on("UPDATE", ".vco-navigation", function () {
         alert("MY!!!!!!!!!!!!!!!!");
     });
-    $("#dates > input").change(function(){
+    $("#range-dates > input").change(function(){
         loadDataForTimeline(reload = true);
     });
-//    $(document).on("click", "div.nav-next", function () {
-//        if(window.current_marker + 1 ==  window.count_marker){
-//            window.page++;
-//            $.ajax({
-//                type: "GET",
-//                data: getCategories(),
-//                url: "/timeline/timeline/" + window.timeline_id,
-//                dataType: 'json',
-//                success: function (data) {
-//                    window.data = data;
-//                    window.date_count = data.timeline.date_count;
-//                    window.page = data.timeline.current_page;
-//                    window.total_page = data.timeline.total_page;
-//                    storyjs_embedjs.reload(data);
-//                    /*
-//                    VMM.Timeline.DataObj.getData(data);
-//                    window.goToSlide(1, "easeOutExpo", 0, true);
-//                    window.goToEvent(1)
-//
-//                    VMM.Lib.visible("div.nav-next", true);*/
-//                }
-//            });
-//        }
-//    });
-//    $(document).on("click", "div.nav-previous", function () {
-//        if(window.current_marker  ==  1  && window.page > 0){
-//            window.page--;
-//            $.ajax({
-//                type: "GET",
-//                data: getCategories(),
-//                url: "/timeline/timeline/" + window.timeline_id,
-//                dataType: 'json',
-//                success: function (data) {
-//                    window.data = data;
-//                    window.date_count = data.timeline.date_count;
-//                    window.page = data.timeline.current_page;
-//                    window.total_page = data.timeline.total_page;
-//                    storyjs_embedjs.reload(data);
-//                    VMM.Timeline.DataObj.getData(data);
-//                    window.goToSlide(3, "easeOutExpo", 0, true);
-//                    window.goToEvent(3)
-//                    VMM.Lib.visible("div.nav-next", true);
-//                }
-//            });
-//        }
-//    });
+
     $("#categories input").checkbox({
         buttonStyle: 'btn-base',
         buttonStyleChecked: 'btn-success',
@@ -146,7 +96,9 @@ $(document).ready(function () {
         uncheckedClass: 'icon-check-empty'
     });
 
-//    $('#start-date').datepicker();
-//    $('#end-date').datepicker();
-
+    $.get($("#tmp_issues").attr('src'), function(data){
+        console.log("Load template complete" + this);
+        $("#tmp_issues").html(data);
+        //$("#tmp_dates").html(data);
+    });
 });
