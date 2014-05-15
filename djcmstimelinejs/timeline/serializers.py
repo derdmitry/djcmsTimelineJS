@@ -26,9 +26,9 @@ class TimelineSerializer(serializers.ModelSerializer):
         if start_date and end_date:
             dates = dates.filter(startDate__range=(start_date, end_date))
 
-        return DateSerializer(dates[page*count:page*count+count]).data
+        #return DateSerializer(dates[page*count:page*count+count]).data
 
-        #return DateSerializer(dates).data
+        return DateSerializer(dates).data
 
     def get_date_count(self, obj):
         categories_id = self.context.get('cat_ids', None)
