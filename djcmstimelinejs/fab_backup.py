@@ -117,20 +117,20 @@ def backup_db():
 @parallel
 def backup_files():
 
-    remote_store_path = mount_remote_store()
-    date = time.strftime('%Y%W')
-    remote_dump_path = os.path.join(remote_store_path,
-                                    env.backup_remote_store['sub_path_files'],
-                                    date)
+    for i, remote_store_path in enumerate(mount_remote_store()):
+        date = time.strftime('%Y%W')
+        remote_dump_path = os.path.join(remote_store_path,
+                                        env.backup_remote_store[i]['sub_path_files'],
+                                        date)
 
-    if not os.path.exists(remote_dump_path):
-        local('mkdir -p %s' % remote_dump_path)
+        if not os.path.exists(remote_dump_path):
+            local('mkdir -p %s' % remote_dump_path)
 
-    for backup_files in env.backup_files_list:
-        excludes = ''
-        if backup_files.get('excludes'):
-            excludes = ' '.join(["--exclude '%s'" % e for e in backup_files['excludes']])
-        local('rsync -r -v --delete %s %s %s' %
-              (excludes, remote_dump_path, backup_files['localpath']))
-    print 'rsync -r -v --delete %s %s %s' % (excludes, remote_dump_path, backup_files['localpath'])
+        for backup_files in env.backup_files_list:
+            excludes = ''
+            if backup_files.get('excludes'):
+                excludes = ' '.join(["--exclude '%s'" % e for e in backup_files['excludes']])
+            local('rsync -r -v --delete %s %s %s' %
+                  (excludes, remote_dump_path, backup_files['localpath']))
+        print 'rsync -r -v --delete %s %s %s' % (excludes, remote_dump_path, backup_files['localpath'])
     umount_remote_store()
