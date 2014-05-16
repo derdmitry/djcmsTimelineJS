@@ -92,15 +92,20 @@ def copy_dumps_to_remote_store(dump_file_list):
         basename_dump_file = os.path.basename(dump_file)
         remote_dump_file = os.path.join(remote_dump_path, basename_dump_file)
         local("cp %s %s" % (dump_file, remote_dump_file))
+        # for local_path in env.backup_files_list:
+        #     local_dump_file = os.path.join(local_path['localpath'], basename_dump_file)
+        #     local("cp %s %s" % (remote_dump_file, local_dump_file))
 
+    print "copy dump: cp %s %s" % (dump_file, remote_dump_file)
     umount_remote_store()
 
 
 def backup_db():
     dump_file_list = make_local_dumps()
+    print dump_file_list
     copy_dumps_to_remote_store(dump_file_list)
 
-
+@parallel
 def backup_files():
 
     remote_store_path = mount_remote_store()
@@ -117,6 +122,6 @@ def backup_files():
         if backup_files.get('excludes'):
             excludes = ' '.join(["--exclude '%s'" % e for e in backup_files['excludes']])
         local('rsync -r -v --delete %s %s %s' %
-              (excludes, backup_files['localpath'], remote_dump_path))
-
+              (excludes, remote_dump_path, backup_files['localpath']))
+    print 'rsync -r -v --delete %s %s %s' % (excludes, remote_dump_path, backup_files['localpath'])
     umount_remote_store()
